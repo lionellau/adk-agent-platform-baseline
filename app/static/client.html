@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Media Insights client</title>
+<style>
+  :root { --bg:#fafafa; --fg:#1a1a1a; --muted:#666; --line:#e0e0e0; --card:#fff; --accent:#1a73e8; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#121212; --fg:#eee; --muted:#aaa; --line:#333; --card:#1d1d1d; --accent:#8ab4f8; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg); }
+  header { padding:12px 16px; border-bottom:1px solid var(--line); display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  main { display:grid; grid-template-columns: 1fr 360px; gap:16px; padding:16px; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+  section { background:var(--card); border:1px solid var(--line); border-radius:6px; padding:12px; }
+  input, select, button, textarea { font:inherit; padding:6px 8px; border:1px solid var(--line); border-radius:4px; background:var(--card); color:var(--fg); }
+  button { cursor:pointer; background:var(--accent); color:#fff; border:none; }
+  #log { height:52vh; overflow:auto; white-space:pre-wrap; }
+  .user { color:var(--accent); margin-top:10px; } .agent { margin-top:4px; } .meta { color:var(--muted); font-size:12px; }
+  pre { white-space:pre-wrap; word-break:break-word; font-size:12px; margin:0; }
+  form { display:flex; gap:8px; margin-top:8px; } form input { flex:1; }
+</style>
+</head>
+<body>
+<header>
+  <label>User <input id="user" value="u-anna" size="10"></label>
+  <label>Name <input id="name" value="Anna" size="10"></label>
+  <label>Business unit
+    <select id="bu"><option>entertainment</option><option>news</option><option>legal</option><option>platform</option></select>
+  </label>
+  <button id="new">New session</button>
+  <span class="meta" id="sid">no session</span>
+</header>
+<main>
+  <section>
+    <div id="log"></div>
+    <form id="f"><input id="msg" placeholder="Ask about views, rights, or request a brief" autocomplete="off"><button>Send</button></form>
+  </section>
+  <section>
+    <b>Session card</b> <span class="meta">(state and events after each turn)</span>
+    <pre id="card"></pre>
+    <hr>
+    <b>Memory for this user</b> <button id="mem" style="padding:2px 8px">Refresh</button>
+    <pre id="memories"></pre>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+let sessionId = null;
+const log = (cls, text) => { const d = document.createElement("div"); d.className = cls; d.textContent = text; $("log").appendChild(d); $("log").scrollTop = 1e9; return d; };
+
+$("new").onclick = async () => {
+  const r = await fetch("/api/sessions", { method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ user_id:$("user").value, business_unit:$("bu").value, display_name:$("name").value }) });
+  const card = await r.json(); if (!r.ok) { log("meta", JSON.stringify(card)); return; }
+  sessionId = card.session.session_id; $("sid").textContent = "session " + sessionId; $("card").textContent = JSON.stringify(card, null, 1);
+};
+
+$("mem").onclick = async () => {
+  const r = await fetch(`/api/memories/${encodeURIComponent($("user").value)}?q=preferences`);
+  $("memories").textContent = JSON.stringify(await r.json(), null, 1);
+};
+
+$("f").onsubmit = async (e) => {
+  e.preventDefault(); const text = $("msg").value.trim(); if (!text) return; $("msg").value = "";
+  if (!sessionId) await $("new").onclick();
+  log("user", "You: " + text); const out = log("agent", ""); let streamed = "";
+  const r = await fetch("/api/chat", { method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ user_id:$("user").value, session_id:sessionId, message:text }) });
+  const reader = r.body.getReader(); const dec = new TextDecoder(); let buf = "";
+  while (true) {
+    const { value, done } = await reader.read(); if (done) break;
+    buf += dec.decode(value, { stream:true });
+    let i; while ((i = buf.indexOf("\n\n")) >= 0) {
+      const line = buf.slice(0, i).replace(/^data: /, ""); buf = buf.slice(i + 2); if (!line) continue;
+      const ev = JSON.parse(line);
+      if (ev.type === "session_card") $("card").textContent = JSON.stringify(ev, null, 1);
+      else if (ev.type === "tool_call") log("meta", `${ev.author} → ${ev.names.join(", ")}`);
+      else if (ev.type === "transfer") log("meta", `transfer → ${ev.to}`);
+      else if (ev.type === "response_chunk") { streamed += ev.text; out.textContent = "Agent: " + streamed; }
+      else if (ev.type === "final") { if (ev.text) out.textContent = "Agent: " + ev.text; }
+      else if (ev.type === "error") log("meta", ev.message);
+    }
+  }
+};
+</script>
+</body>
+</html>

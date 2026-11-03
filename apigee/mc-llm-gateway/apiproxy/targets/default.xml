@@ -12,6 +12,6 @@
   <Flows/>
   <PostFlow name="PostFlow"><Request/><Response/></PostFlow>
   <HTTPTargetConnection>
-    <URL>https://{propertyset.vertex_config.region}-aiplatform.googleapis.com</URL>
+    <URL>https://{propertyset.vertex_config.host}</URL>
   </HTTPTargetConnection>
 </TargetEndpoint>

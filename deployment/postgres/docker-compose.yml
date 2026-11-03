@@ -1,0 +1,25 @@
+# Local Postgres for SESSION_BACKEND=postgres (the ch2 lab's postgres/Dockerfile, as compose).
+# Start:  docker compose -f deployment/postgres/docker-compose.yml up -d
+# Stop:   docker compose -f deployment/postgres/docker-compose.yml down        (data kept in the volume)
+# Reset:  docker compose -f deployment/postgres/docker-compose.yml down -v     (deletes all sessions)
+# Shell (not .env, it holds a password):
+#         export SESSION_BACKEND=postgres
+#         export DATABASE_URL=postgresql+asyncpg://adk:${POSTGRES_PASSWORD}@127.0.0.1:${POSTGRES_PORT:-5432}/adk_sessions
+# Port 5432 busy (a local Postgres)? export POSTGRES_PORT=55432 before "up".
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: adk
+      POSTGRES_DB: adk_sessions
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in your shell first}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - adk_sessions:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adk -d adk_sessions"]
+      interval: 5s
+      retries: 10
+volumes:
+  adk_sessions:

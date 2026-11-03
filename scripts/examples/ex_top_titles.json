@@ -1,0 +1,7 @@
+{
+  "search_key": "Which titles had the most views last month?",
+  "contents_example": {
+    "contents": [{"role": "user", "parts": [{"text": "Which titles had the most views last month?"}]}],
+    "expected_contents": [{"content": {"role": "model", "parts": [{"text": "Top titles, October 2026 (all platforms):\n1. Lion City Hearts: 203,000 views\n2. Harbour Evening News: 202,000 views\n3. Merlion Mysteries: 192,000 views\nSource: daily_viewership, 1–31 Oct 2026."}]}}]
+  }
+}

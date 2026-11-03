@@ -1,8 +1,0 @@
-# Local development and evaluation (S3). Runtime pins are generated from this venv in R1.
-google-adk[eval,mcp]>=1.18
-google-cloud-aiplatform[agent_engines,adk]
-google-cloud-modelarmor
-google-cloud-secret-manager
-requests
-python-dotenv
-pytest

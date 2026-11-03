@@ -1,0 +1,6 @@
+# Copy to terraform.tfvars (git-ignored) and fill in. No secrets here.
+project_id  = "FILL_IN_PROJECT_ID"
+region      = "us-central1"
+cost_center = "FILL_IN_COST_CENTER"
+# After the first deploy, add the agent identities and re-apply:
+# agent_principals = ["serviceAccount:FILL_IN@FILL_IN.iam.gserviceaccount.com"]

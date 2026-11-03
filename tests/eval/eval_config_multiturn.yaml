@@ -1,0 +1,9 @@
+# Multi-turn evaluation (Course 9: User Simulator). Grades traces from:
+#   agents-cli eval dataset synthesize -n 5 --max-turns 4 \
+#     --instruction "Business-unit staff ask about October 2026 views, compare units, ask for streaming rights by title, and sometimes ask vague questions" \
+#     --environment-context "BigQuery table daily_viewership has October 2026 views for titles C001-C010"
+#   agents-cli eval grade --config tests/eval/eval_config_multiturn.yaml
+metrics_to_run:
+  - multi_turn_task_success
+  - multi_turn_trajectory_quality
+  - multi_turn_tool_use_quality

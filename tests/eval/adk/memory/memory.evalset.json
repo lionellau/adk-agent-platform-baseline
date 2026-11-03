@@ -1,0 +1,23 @@
+{
+  "eval_set_id": "memory",
+  "name": "Remember a preference in turn 1, apply it in turn 2 (memory as a tool + user state)",
+  "eval_cases": [
+    {
+      "eval_id": "remember_then_apply_format",
+      "conversation": [
+        {
+          "invocation_id": "inv-1",
+          "user_content": {"role": "user", "parts": [{"text": "Please remember: I always want answers as at most 3 bullet points."}]},
+          "final_response": {"role": "model", "parts": [{"text": "Noted. I will answer in at most 3 bullet points from now on."}]},
+          "intermediate_data": {"tool_uses": [{"name": "remember_preference", "args": {"preference": "Prefers answers as at most 3 bullet points."}}]}
+        },
+        {
+          "invocation_id": "inv-2",
+          "user_content": {"role": "user", "parts": [{"text": "Which news titles performed best in October 2026?"}]},
+          "final_response": {"role": "model", "parts": [{"text": "- Harbour Evening News: 202,000 views\n- Island Talk: 75,000 views\n- Berita Malam: 54,200 views"}]}
+        }
+      ],
+      "session_input": {"app_name": "app", "user_id": "eval-user", "state": {"user:business_unit": "news"}}
+    }
+  ]
+}

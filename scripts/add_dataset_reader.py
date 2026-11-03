@@ -3,6 +3,7 @@
 Usage: python3 scripts/add_dataset_reader.py ds.json SERVICE_ACCOUNT_EMAIL
 It edits ds.json in place (idempotent); `bq update --source ds.json` applies it.
 """
+
 import json
 import sys
 

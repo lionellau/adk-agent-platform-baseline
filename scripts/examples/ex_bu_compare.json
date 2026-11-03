@@ -1,0 +1,7 @@
+{
+  "search_key": "Compare news and entertainment views",
+  "contents_example": {
+    "contents": [{"role": "user", "parts": [{"text": "Compare news and entertainment views"}]}],
+    "expected_contents": [{"content": {"role": "model", "parts": [{"text": "October 2026 total views:\n- Entertainment: 780,800\n- News: 403,000\nEntertainment had 377,800 more views (+93.7 %)."}]}}]
+  }
+}

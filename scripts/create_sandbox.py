@@ -1,17 +1,45 @@
-"""X1: create one Code Execution sandbox under the deployed agent engine and print its name.
+"""Create a Code Execution sandbox under an Agent Runtime engine (Course 5) and print its name.
 
-Run once. If it prints PENDING, wait and look it up in the console; do not re-run (it would create a second sandbox).
-Needs PROJECT_ID, REGION and AGENT_ENGINE in the environment (source ~/platform.env).
+Usage: uv run python scripts/create_sandbox.py   (AGENT_ENGINE set; run once)
+Then set SANDBOX_RESOURCE_NAME in .env to enable the chart_analyst agent.
 """
+
+from __future__ import annotations
+
 import os
+import sys
 
-import vertexai
-from vertexai import types
+from dotenv import load_dotenv
 
-client = vertexai.Client(project=os.environ["PROJECT_ID"], location=os.environ["REGION"])
-op = client.agent_engines.sandboxes.create(
-    name=os.environ["AGENT_ENGINE"],
-    config=types.CreateAgentEngineSandboxConfig(display_name="mc-analysis-sandbox"),
-    spec={"code_execution_environment": {}},
-)
-print("SANDBOX_RESOURCE_NAME=" + (op.response.name if op.response else "PENDING"))
+load_dotenv()  # the repo's .env; variables already set in the shell win
+
+
+def main() -> int:
+    import agentplatform
+
+    from app.app_utils.services import (
+        agent_engine_resource_name,
+        agent_runtime_location,
+    )
+
+    engine = agent_engine_resource_name()
+    if not engine:
+        print("FIX: set AGENT_ENGINE first")
+        return 1
+    client = agentplatform.Client(
+        project=os.environ["GOOGLE_CLOUD_PROJECT"], location=agent_runtime_location()
+    )
+    op = client.sandboxes.create(
+        name=engine,
+        spec={"code_execution_environment": {}},
+        config={"display_name": "mc-analysis-sandbox"},
+    )
+    name = getattr(getattr(op, "response", None), "name", None) or getattr(
+        op, "name", None
+    )
+    print(f"SANDBOX_RESOURCE_NAME={name}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
