@@ -1,0 +1,23 @@
+<ProxyEndpoint name="default">
+  <PreFlow name="PreFlow">
+    <Request>
+      <Step><Name>VA-VerifyAPIKey</Name></Step>
+      <Step><Name>Q-ContentQuota</Name></Step>
+    </Request>
+    <Response/>
+  </PreFlow>
+  <Flows>
+    <Flow name="getTitleRights">
+      <Request/>
+      <Response><Step><Name>JS-RightsLookup</Name></Step></Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/titles/*") and (request.verb = "GET")</Condition>
+    </Flow>
+    <Flow name="not-found">
+      <Request><Step><Name>RF-NotFound</Name></Step></Request>
+      <Response/>
+    </Flow>
+  </Flows>
+  <PostFlow name="PostFlow"><Request/><Response/></PostFlow>
+  <HTTPProxyConnection><BasePath>/mc/content/v1</BasePath></HTTPProxyConnection>
+  <RouteRule name="noroute"/>
+</ProxyEndpoint>

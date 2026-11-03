@@ -1,0 +1,10 @@
+<RaiseFault continueOnError="false" enabled="true" name="RF-NotAllowed">
+  <FaultResponse>
+    <Set>
+      <StatusCode>404</StatusCode>
+      <ReasonPhrase>Not Found</ReasonPhrase>
+      <Payload contentType="application/json">{"error":"Only POST .../publishers/google/models/MODEL:generateContent on API v1 is allowed through this gateway."}</Payload>
+    </Set>
+  </FaultResponse>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

@@ -1,0 +1,7 @@
+<ExtractVariables name="EV-ExtractRequest">
+  <Source>request</Source>
+  <URIPath>
+    <Pattern ignoreCase="true">/v1/projects/*/locations/*/publishers/google/models/{model}:generateContent</Pattern>
+  </URIPath>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>

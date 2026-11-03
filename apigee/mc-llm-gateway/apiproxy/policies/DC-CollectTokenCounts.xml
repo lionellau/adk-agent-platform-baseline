@@ -1,0 +1,6 @@
+<DataCapture name="DC-CollectTokenCounts" continueOnError="false" enabled="true">
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <Capture><Collect ref="prompt_token_count" default="0"/><DataCollector>dc_mc_prompt_tokens</DataCollector></Capture>
+  <Capture><Collect ref="candidates_token_count" default="0"/><DataCollector>dc_mc_candidates_tokens</DataCollector></Capture>
+  <Capture><Collect ref="total_token_count" default="0"/><DataCollector>dc_mc_total_tokens</DataCollector></Capture>
+</DataCapture>

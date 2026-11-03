@@ -1,0 +1,7 @@
+<AssignMessage continueOnError="false" enabled="true" name="AM-ExtractUserPrompt">
+  <AssignVariable>
+    <Name>user_prompt</Name>
+    <Template>{jsonPath('$.contents[-1].parts[-1].text',request.content,true)}</Template>
+  </AssignVariable>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

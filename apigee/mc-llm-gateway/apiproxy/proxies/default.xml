@@ -1,0 +1,29 @@
+<ProxyEndpoint name="default">
+  <PreFlow name="PreFlow">
+    <Request>
+      <Step><Name>VA-VerifyAPIKey</Name></Step>
+    </Request>
+    <Response/>
+  </PreFlow>
+  <Flows>
+    <Flow name="generateContent">
+      <Request>
+        <Step><Name>EV-ExtractRequest</Name></Step>
+        <Step><Name>AM-ExtractUserPrompt</Name></Step>
+        <Step><Name>PTL-PromptTokenLimit</Name><Condition>user_prompt != null and user_prompt != ""</Condition></Step>
+        <Step><Name>LTQ-TokenEnforce</Name></Step>
+      </Request>
+      <Response/>
+      <Condition>(proxy.pathsuffix MatchesPath "/v1/projects/*/locations/*/publishers/google/models/*") and (request.verb = "POST")</Condition>
+    </Flow>
+    <Flow name="not-allowed">
+      <Request>
+        <Step><Name>RF-NotAllowed</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+  </Flows>
+  <PostFlow name="PostFlow"><Request/><Response/></PostFlow>
+  <HTTPProxyConnection><BasePath>/mc/llm</BasePath></HTTPProxyConnection>
+  <RouteRule name="default"><TargetEndpoint>default</TargetEndpoint></RouteRule>
+</ProxyEndpoint>

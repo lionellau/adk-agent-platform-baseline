@@ -1,0 +1,3 @@
+<APIProxy name="mc-llm-gateway">
+  <Description>Model proxy for ADK agents (ApigeeLlm): API key per BU, prompt and token quotas, token analytics</Description>
+</APIProxy>

@@ -1,0 +1,8 @@
+<Quota continueOnError="false" enabled="true" name="Q-ContentQuota" type="calendar">
+  <Allow count="60" countRef="verifyapikey.VA-VerifyAPIKey.apiproduct.developer.quota.limit"/>
+  <Interval ref="verifyapikey.VA-VerifyAPIKey.apiproduct.developer.quota.interval">1</Interval>
+  <TimeUnit ref="verifyapikey.VA-VerifyAPIKey.apiproduct.developer.quota.timeunit">minute</TimeUnit>
+  <Distributed>true</Distributed>
+  <Synchronous>true</Synchronous>
+  <StartTime>2026-01-01 00:00:00</StartTime>
+</Quota>

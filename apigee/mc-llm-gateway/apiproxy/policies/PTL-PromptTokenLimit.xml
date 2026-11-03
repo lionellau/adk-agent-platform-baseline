@@ -1,0 +1,5 @@
+<PromptTokenLimit continueOnError="false" enabled="true" name="PTL-PromptTokenLimit">
+  <DisplayName>Limit prompt tokens per minute</DisplayName>
+  <Rate>20000pm</Rate>
+  <UserPromptSource>{user_prompt}</UserPromptSource>
+</PromptTokenLimit>

@@ -1,0 +1,4 @@
+project_id  = "REPLACE_ME_PROJECT_ID"
+region      = "us-central1"
+env         = "dev"
+cost_center = "REPLACE_ME_COST_CENTER"

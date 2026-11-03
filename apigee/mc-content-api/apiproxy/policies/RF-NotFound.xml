@@ -1,0 +1,5 @@
+<RaiseFault continueOnError="false" enabled="true" name="RF-NotFound">
+  <FaultResponse><Set><StatusCode>404</StatusCode><ReasonPhrase>Not Found</ReasonPhrase>
+    <Payload contentType="application/json">{"error":"unknown resource"}</Payload></Set></FaultResponse>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

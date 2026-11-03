@@ -1,0 +1,3 @@
+<Javascript continueOnError="false" enabled="true" name="JS-RightsLookup" timeLimit="200">
+  <ResourceURL>jsc://rights-lookup.js</ResourceURL>
+</Javascript>

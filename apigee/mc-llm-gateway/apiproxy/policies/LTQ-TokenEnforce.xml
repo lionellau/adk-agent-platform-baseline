@@ -1,0 +1,11 @@
+<LLMTokenQuota continueOnError="false" enabled="true" name="LTQ-TokenEnforce" type="calendar">
+  <Allow count="1000" countRef="verifyapikey.VA-VerifyAPIKey.apiproduct.developer.llmQuota.limit"/>
+  <Interval ref="verifyapikey.VA-VerifyAPIKey.apiproduct.developer.llmQuota.interval">1</Interval>
+  <TimeUnit ref="verifyapikey.VA-VerifyAPIKey.apiproduct.developer.llmQuota.timeunit">minute</TimeUnit>
+  <Distributed>true</Distributed>
+  <Synchronous>true</Synchronous>
+  <StartTime>2026-01-01 00:00:00</StartTime>
+  <LLMModelSource>{model}</LLMModelSource>
+  <EnforceOnly>true</EnforceOnly>
+  <SharedName>mc-llm-counter</SharedName>
+</LLMTokenQuota>

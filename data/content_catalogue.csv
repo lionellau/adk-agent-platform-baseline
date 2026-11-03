@@ -1,0 +1,11 @@
+content_id,title,business_unit,genre,language,release_date,duration_min
+C001,Harbour Evening News,news,news,English,2026-01-05,30
+C002,Island Talk,news,current_affairs,English,2026-02-10,45
+C003,Market Pulse,news,business,English,2026-03-01,25
+C004,Evening Bulletin,news,news,Malay,2026-02-01,30
+C005,Night Bulletin,news,news,Tamil,2026-02-01,30
+C006,Kopi Kitchen,entertainment,lifestyle,English,2026-01-20,22
+C007,Lion City Hearts,entertainment,drama,English,2026-04-15,40
+C008,Star Search Stage,entertainment,variety,Mandarin,2026-05-02,60
+C009,Merlion Mysteries,entertainment,drama,English,2026-06-11,42
+C010,Hawker Love Story,entertainment,drama,Mandarin,2026-07-07,45

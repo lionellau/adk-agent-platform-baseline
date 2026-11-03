@@ -1,0 +1,15 @@
+openapi: 3.0.3
+info: {title: Content rights API (mock), version: 1.0.0}
+servers: [{url: https://APIGEE_HOST/mc/content/v1}]
+components:
+  securitySchemes: {apiKey: {type: apiKey, in: header, name: x-apikey}}
+security: [{apiKey: []}]
+paths:
+  /titles/{contentId}:
+    get:
+      operationId: getTitleRights
+      summary: Distribution rights for one title
+      parameters: [{name: contentId, in: path, required: true, schema: {type: string, example: C007}}]
+      responses:
+        "200": {description: Rights record}
+        "404": {description: Unknown content_id}
