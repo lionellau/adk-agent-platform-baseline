@@ -235,3 +235,6 @@ Or shut down the whole project.
 - **The data is synthetic.** Every title is fictional. `python3 data/gen_synthetic.py` regenerates the CSVs and prints the reference answers.
 - **Two policy files are adapted.** The token-quota policies in `apigee/mc-llm-gateway` follow the structure of Google's [`apigee-samples`](https://github.com/GoogleCloudPlatform/apigee-samples) (`llm-token-limits-v2`, Apache License 2.0).
 - **ADK version.** Verified with ADK 2.13 and `google-cloud-aiplatform` 2.7 (import checks and a mocked-gateway end-to-end run). Cloud behaviour (model availability per region, Apigee eval-org support for AI policies) can only be confirmed in your project.
+
+## License
+Apache License 2.0. See [LICENSE](LICENSE).
